@@ -1,16 +1,20 @@
 % Main DFA
 
-%clear all; close all; clc ;
+clear all; close all; clc ;
 load('DataTestDFA.mat');
 %figure();
 %plot(SimonRRsit);
 
 %Definition des variables et moyennage 
-y=SimonRRlay(1:298,1);
-y_mean=y(:,1)-mean(y);
+% y=SimonRRlay(1:298,1);
+
+y = randn(1,1000)';
+
+
+y_mean=y-mean(y);
 %figure(3);
 %plot(y_mean)
-N_trame=5;
+N_trame=100;
 recouvrement=0;
 
 %Decoupage de la serie temporelle en fenetres
@@ -29,12 +33,12 @@ p=polyfit(log(xlogabs),log(Fn),1)
 yfitA = polyval(p,log(xlogabs));
 
 %Figures
-figure(1);
+figure(2);
 scatter(log(xlogabs),log(Fn));
 %plot(log(xlogabs),log(Fn));
 hold on
 plot(log(xlogabs),yfitA, '--r', 'LineWidth',2);
 grid on
-legend('Données','Modèle')
+legend('Donnï¿½es','Modï¿½le')
 xlabel('x')
 ylabel('y')
