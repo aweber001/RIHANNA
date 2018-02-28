@@ -14,7 +14,7 @@ plot(fftshift(abs(fft(series))));
 
 X=cumsum(series-mean(series));
 X=transpose(X);
-scale=[16, 32, 64, 128, 256, 512];
+scale=[16, 32, 64, 128, 256]; %Ne pas dépasser la taille de la series temporelle !!
 m=1;% ordre regression linéaire
 
 
