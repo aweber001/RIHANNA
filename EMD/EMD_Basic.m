@@ -2,32 +2,31 @@ function [ imf ] = EMD_Basic( signal )
 %EMD_BASIC Summary of this function goes here
 %   Detailed explanation goes here
 
-n = 500000;
+x=signal.';
 
-for i = 1:30
+for i=1:5
     
-
+%Look for maximum and minimum
 [max,indmax] = findpeaks(x);
-meanmax = mean(max);
+
 [invmin,indmin] = findpeaks(-x);
 min = -invmin;
-meanmin = mean(min);
 
-maxline = interp1([0;indmax(2:end-1);n],[meanmax;max(2:end-1);meanmax],1:n,'spline');
+%Interpolation on maxima and minima
+maxline = spline(max,indmax,1:length(x));
+minline = spline(min,indmin,1:length(x));
 
-minline = interp1([0;indmin(2:end-1);n],[ meanmin;min(2:end-1);meanmin],1:n,'spline');
-signalinterp = interp1(0:length(signal),signal,1:n,'spline');
-
+%Substraction from the average
 m = (maxline+minline)/2;
+d =  signal - m';
 
-d =  signalinterp - m';
+%Display
 figure
 plot(d)
 
 x = m';
 
 end
-
 
 end
 
