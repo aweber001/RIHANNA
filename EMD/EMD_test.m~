@@ -1,0 +1,17 @@
+load('../DataTest.mat')
+clearvars -except Antoine AxelleRR Benjamin Paul SimonRR SimonRRlay SimonRRsit SimonRRstand Youssef
+close all
+
+% This file is a test file to discover how to use the EMD method and and
+% the On-line EMD
+
+%% test 1: signal AMFM
+% V
+fs = 1000; 
+fc = 200;  
+t = (0:1/fs:0.2)';
+
+
+
+imf = EMD_Basic(SimonRR);
+plot(imf);
