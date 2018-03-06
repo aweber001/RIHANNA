@@ -1,18 +1,26 @@
-function [Y,P] = reg_lin (A_s, D_s)
+function [C] = reg_lin (x,y,q)
  
 
   
-[N,L] = size(A_s);
+N = length(x);
 
-Y=zeros(N,L);
-P=zeros(1,N);
+J = zeros(N,q+1);
 
-for kk=1:N
-  coefficient = polyfit(A_s(kk,:),D_s(kk,:),1);%coefficiant des polynomes de degré 1 correspondant à la regression linéaire
-  yfit = polyval(coefficient,A_s(kk,:));
-  Y(kk,:) = yfit;
-  P(kk) = coefficient(1);
+%% Matrice jacobienne 
+J(:,1) = ones(N,1);
+
+if q >= 1
+J(:,2) = x;
 end
+if q >= 2
+J(:,3) = x.^2;
+end
+if q >= 3
+J(:,4) = x.^3;
+end
+
+C = inv(J'*J)*(J'*y');
+
 
   
 
