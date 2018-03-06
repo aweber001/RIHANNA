@@ -13,9 +13,15 @@ order=[2];%ordre pour la regression linéaire
 
 absis=(1:length(signal));
 recouvrement=0;
+
+
     
 %%ETAPE 1 : ENLEVER MOYENNE (Integrated time series)
 signal=cumsum(signal-mean(signal));
+
+%%Signal from beginning and from end
+Signal_inv=Signal(end:-1:1); % Ne marche pas sous octave ! 
+absis_inv=absis(end:-1:1);   %Ne marche pas sous octave ! 
 
 for mm =1:length(order)
   
@@ -27,14 +33,13 @@ for mm =1:length(order)
     for kk=1:L
         N_trame=scale(kk);
         [Signal_cut,Absis_cut]=Decoupage_RI(signal,absis,N_trame, recouvrement,'Rectangle');
-        RFN=Calcul_RFN(Signal_cut,Absis_cut,order(mm));
+        RFN=Calcul_RFN(Signal_cut,Absis_cut,Signal_inv_cut,Absis_inv_cut,order(mm));
         Fn(1,kk)=(mean(RFN.^(q(qq)))).^(1/q(qq));
     end
 
 
 
-
-    %%ETAPE 3 :
+    %%ETAPE 3 : Calcul du alpha
    
       Poly=polyfit(log10(scale),log10(Fn),order(mm));
       Alpha=Poly(1)
