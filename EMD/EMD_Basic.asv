@@ -6,34 +6,33 @@ n = length(signal);
 ech = 1:n;
 surech = 1:0.1:n;
 x = spline(ech,signal',surech);
-moy = mean(x);
+m = mean(x);
 for i=1:10
-
-clearvars max indmax min indmin;
-
+    
 %Look for maximum and minimum
 [max,indmax] = findpeaks(x);
 
 [invmin,indmin] = findpeaks(-x);
 min = -invmin;
 
-max = [moy max moy];
+max = [m max m];
 indmax = [1 indmax length(surech)];
 
-min = [moy min moy];
+min = [m min m];
 indmin = [1 indmin length(surech)];
 
 
 %Interpolation on maxima and minima
 maxline = spline(surech(indmax), max ,surech);
 minline = spline(surech(indmin), min ,surech);
+hold on
 
 %Substraction from the average
 m = (maxline+minline)/2;
 d =  x - m;
 
 %Display
-figure
+
 plot(surech,m,'o')
 x = m;
 

@@ -8,8 +8,8 @@ close all
 %% test 1: signal AMFM
 
 % Variables
-fs = 1000; 
-fc = 200;  
+fs = 4000; 
+fc = 2000;  
 t = (0:1/fs:0.2)';
 fm = 50;
 
@@ -19,7 +19,5 @@ y = fmmod(x,fc,fs,fm);
 ydouble = ammod(y,fc,fs);
 
 %Display IMFs
-imf = EMD_Basic(ydouble);
-plot(imf);
-
+EMD_Basic(ydouble);
 
