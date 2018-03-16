@@ -3,39 +3,23 @@ function [ imf ] = EMD_Basic( signal )
 %   Detailed explanation goes here
 
 n = length(signal);
-ech = 1:n;
-surech = 1:0.1:n;
-x = spline(ech,signal',surech);
-moy = mean(x);
-for i=1:10
+ech = (1:n)';
+x = signal;
 
-clearvars max indmax min indmin;
-
-%Look for maximum and minimum
-[max,indmax] = findpeaks(x);
-
-[invmin,indmin] = findpeaks(-x);
-min = -invmin;
-
-max = [moy max moy];
-indmax = [1 indmax length(surech)];
-
-min = [moy min moy];
-indmin = [1 indmin length(surech)];
-
-
-%Interpolation on maxima and minima
-maxline = spline(surech(indmax), max ,surech);
-minline = spline(surech(indmin), min ,surech);
-
-%Substraction from the average
-m = (maxline+minline)/2;
-d =  x - m;
-
-%Display
-figure
-plot(surech,m,'o')
-x = m;
+for i=1:4
+    
+   % find maxima and minima
+   [max,imax,min,imin] = search_minmax(x);
+   %Interpolation on maxima and minima 
+   maxline = pchip(imax,max,ech);
+   minline = pchip(imin,min,ech);
+   %Substraction from the average
+   residual = (maxline+minline)/2;
+   detail =  datawork - residual;
+    
+%     plot(ech,d)
+%     x = residual;
+%     hold on
 
 end
 
