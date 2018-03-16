@@ -28,9 +28,6 @@ function [Y_model] = model(C,X,q)
     
     
   end
-  
-  
-
 
 
 end

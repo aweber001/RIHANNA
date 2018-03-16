@@ -19,7 +19,7 @@ if q >= 3
 J(:,4) = x.^3;
 end
 
-C = inv(J'*J)*(J'*y');
+C = inv(J'*J)*(J'*y');  %% inv(J'*J) * J'*y
 
 
   
