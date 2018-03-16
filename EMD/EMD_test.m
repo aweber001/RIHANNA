@@ -9,13 +9,13 @@ close all
 
 % Variables
 fs = 4000; 
-fc = 2000;  
+fc = 20;  
 t = (0:1/fs:0.2)';
 fm = 50;
 
 %Signal
-x = sin(2*pi*30*t)+2*sin(2*pi*60*t);
-y = fmmod(x,fc,fs,fm);
+y = sin(2*pi*300*t);
+%y = fmmod(x,fc,fs,fm);
 ydouble = ammod(y,fc,fs);
 
 %Display IMFs
