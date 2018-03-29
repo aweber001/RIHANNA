@@ -1,4 +1,4 @@
-function [Alpha] = DFA_basic(Signal, order)
+function [Alpha] = LR_DFA (Signal, order)
  %% Input : 
  %%       Signal : vector to analyse
  %%       order : linear regression order
@@ -7,9 +7,8 @@ function [Alpha] = DFA_basic(Signal, order)
 
 %% Init var
 max = floor(length(Signal)*0.1);
-%scale = [10:10:max];
-%scale=[16 ,32 ,64, 128, 256, 512]; % scale from the windows%
-scale = (10:max);
+scale = [3:max];
+%scale=[16 ,32 ,64, 128, 256, 512, 1024]; % scale from the windows%
 
 L=length(scale);
 
@@ -32,19 +31,34 @@ for kk=1:L
     RFN=Calcul_RFN(Signal_cut,Absis_cut,Signal_inv_cut,Absis_inv_cut,order);
     Fn(1,kk)=sqrt(mean(RFN.^2));
 end
-Poly=reg_lin(log10(scale),log10(Fn),order)
-
-Alpha=Poly(2);
-
+Poly=reg_lin(log10(scale),log10(Fn),order);
+Alpha=Poly(2)
 RegLine=model(Poly,log10(scale),order);
+dist1 = sqrt(sum((RegLine-log10(Fn)).^2))
 
+%% Disp functions 
 figure,
-scatter(log10(scale),log10(Fn))
+scatter(log10(scale),log10(Fn));
 hold on
 plot(log10(scale),RegLine);
-var(Fn)
 
+
+%% STEP 3 : Correction function K
+K = correction(Signal,absis,scale,recouvrement,Alpha,L,order);
+
+%% STEP 4 : DFA fluctuation function Fn_mod
+Fn_mod = Fn./K;
+
+Poly=reg_lin(log10(scale),log10(Fn_mod),order);
+Alpha=Poly(2)
+
+%% Disp functions
+RegLine2=model(Poly,log10(scale),order);
+figure,
+scatter(log10(scale),log10(Fn_mod));
+hold on
+plot(log10(scale),RegLine2);
+dist1 = sqrt(sum((RegLine2-log10(Fn_mod)).^2))
 
 
 end
-
