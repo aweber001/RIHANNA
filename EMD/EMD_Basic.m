@@ -15,7 +15,7 @@ for i=1:4
    minline = pchip(imin,min,ech);
    %Substraction from the average
    residual = (maxline+minline)/2;
-   detail =  datawork - residual;
+   detail =  signal - residual;
     
 %     plot(ech,d)
 %     x = residual;
