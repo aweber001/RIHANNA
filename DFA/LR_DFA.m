@@ -32,7 +32,7 @@ for kk=1:L
     Fn(1,kk)=sqrt(mean(RFN.^2));
 end
 Poly=reg_lin(log10(scale),log10(Fn),order);
-Alpha=Poly(2)
+Alpha=Poly(2);
 RegLine=model(Poly,log10(scale),order);
 dist1 = sqrt(sum((RegLine-log10(Fn)).^2))
 
@@ -44,21 +44,27 @@ plot(log10(scale),RegLine);
 
 
 %% STEP 3 : Correction function K
-K = correction(Signal,absis,scale,recouvrement,Alpha,L,order);
+K = correction(Signal,absis,scale,recouvrement,L,order);
+
+
 
 %% STEP 4 : DFA fluctuation function Fn_mod
 Fn_mod = Fn./K;
 
-Poly=reg_lin(log10(scale),log10(Fn_mod),order);
-Alpha=Poly(2)
+
+Poly_mod=reg_lin(log10(scale),log10(Fn_mod),order);
+Alpha2=Poly_mod(2);
+RegLine2=model(Poly_mod,log10(scale),order);
 
 %% Disp functions
-RegLine2=model(Poly,log10(scale),order);
-figure,
+
 scatter(log10(scale),log10(Fn_mod));
 hold on
 plot(log10(scale),RegLine2);
-dist1 = sqrt(sum((RegLine2-log10(Fn_mod)).^2))
 
+dist2 = sqrt(sum((RegLine2-log10(Fn_mod)).^2))
+
+figure, 
+plot(log10(scale),log10(K));
 
 end

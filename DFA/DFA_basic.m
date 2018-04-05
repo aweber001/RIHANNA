@@ -9,7 +9,7 @@ function [Alpha] = DFA_basic(Signal, order)
 max = floor(length(Signal)*0.1);
 %scale = [10:10:max];
 %scale=[16 ,32 ,64, 128, 256, 512]; % scale from the windows%
-scale = (10:max);
+scale = (3:max);
 
 L=length(scale);
 
@@ -32,18 +32,16 @@ for kk=1:L
     RFN=Calcul_RFN(Signal_cut,Absis_cut,Signal_inv_cut,Absis_inv_cut,order);
     Fn(1,kk)=sqrt(mean(RFN.^2));
 end
-Poly=reg_lin(log10(scale),log10(Fn),order)
+Poly=reg_lin(log10(scale),log10(Fn),order);
 
 Alpha=Poly(2);
 
 RegLine=model(Poly,log10(scale),order);
 
 figure,
-scatter(log10(scale),log10(Fn))
+scatter(log10(scale),log10(Fn));
 hold on
 plot(log10(scale),RegLine);
-var(Fn)
-
 
 
 end
