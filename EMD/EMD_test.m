@@ -5,7 +5,20 @@ close all
 % This file is a test file to discover how to use the EMD method and and
 % the On-line EMD
 
-%% test 1: signal AMFM
+% b = zeros(1,20);
+% 
+% for k = 10:10:200
+%     for j = 1:100
+%         
+%     for i=1:5000
+%         a = a + white_test(randn(1,6000),k);
+%     end
+%     
+%     end
+%     b(k/10) = (a/5000)*100;
+% end
+% 
+% %% test 1: signal AMFM
 
 % Variables
 fs = 4000; 
@@ -19,5 +32,5 @@ y = sin(2*pi*300*t);
 ydouble = ammod(y,fc,fs);
 
 %Display IMFs
-EMD_Basic(ydouble);
+EMD_Basic(SimonRRlay);
 
