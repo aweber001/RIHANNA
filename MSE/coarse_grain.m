@@ -1,3 +1,5 @@
+%ne pas prendre en consideration les commentaires
+
 %%taille
 %rem pour reste de la division euclidienne et floor(a/b) pou le quotient
 %ainsi on sera sur que la taille est divisible par la scale
@@ -14,12 +16,14 @@ a=rem(length(original_signal),scale);
 %original_signal_adapted est le signal sur lequel seront fait les calculs,invariant
 %cg_signal est le signal en grain-crossier obtenu 
 
+
+%ajout condition sur longueur signal par rapport a lechelle 
 if a==0
    original_signal_adapted=original_signal;
    cg_signal=zeros(1,floor(l/scale));
 else
-    original_signal_adapted=cat(2,original_signal,zeros(1,scale-a));
-    cg_signal=zeros(1,floor(l/scale)+1);
+    original_signal_adapted=original_signal(1:floor(l/scale)*scale);
+    cg_signal=zeros(1,floor(l/scale));
 end
 
 %%remplissage de cg
@@ -30,7 +34,9 @@ for j=1:length(cg_signal)
     end
     cg_signal(j)=cg_signal(j)/scale;
 end
+
 %%coté esthetique ' = ' , nom fonction ...
+
 
 
 
