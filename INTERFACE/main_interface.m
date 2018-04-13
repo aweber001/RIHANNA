@@ -22,7 +22,7 @@ function varargout = main_interface(varargin)
 
 % Edit the above text to modify the response to help main_interface
 
-% Last Modified by GUIDE v2.5 12-Apr-2018 14:11:59
+% Last Modified by GUIDE v2.5 12-Apr-2018 21:00:52
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -127,16 +127,6 @@ function Online_Callback(hObject, eventdata, handles)
 % hObject    handle to Online (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-plot(surf([1 2 3]));
-
-
-% --- Executes during object creation, after setting all properties.
-function Logo_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to Logo (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-imshow('logo2.jpg');
-
 
 % Hint: place code in OpeningFcn to populate Logo
 
@@ -146,3 +136,13 @@ function text_intro_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to text_intro (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
+% --- Executes during object creation, after setting all properties.
+function logo_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to logo (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+imshow('logo2.jpg');
+
+% Hint: place code in OpeningFcn to populate logo
