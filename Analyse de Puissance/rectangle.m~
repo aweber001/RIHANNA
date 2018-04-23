@@ -41,11 +41,11 @@ P_rectangle = 0;
 %computing the remaining smaller parts.
 
 for i=floor(fmin):1:floor(fmax)+1
-    P_rectangle = P_rectangle + abs(zr(i)); %We take the 'whole' part first
+    P_rectangle = P_rectangle + abs(zr(i)); %We take the 
 end
 
-P_rectangle = P_rectangle - (fmin-floor(fmin))*abs(zr(floor(fmin))) - (floor(fmax)+1-fmax)*abs(zr(floor(fmax)));
-%we then compute the smaller remaining areas on the left and right side
+P_rectangle = P_rectangle - (fmin-floor(fmin))*abs(zr(floor(fmin))) - (floor(fmax)+1-fmax)*abs(zr(floor(fmax)))
+
 X = [fmin:0.1:fmax];
 Y = abs(zr(floor(X)));
 

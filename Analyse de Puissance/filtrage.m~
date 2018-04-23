@@ -1,0 +1,14 @@
+function [ h ] = filtrage( d )
+%%  Filter function 
+%   This function will compute the filter function h based on its poles
+%%  INPUT
+%   d : the pole vector
+%%  OUTPUT
+%   h : the filter function associated to the poles
+
+x =0;
+x = filter(1,d,bbg);
+h = freqz(1,d,2*pi*f);
+
+end
+

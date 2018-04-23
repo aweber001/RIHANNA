@@ -46,7 +46,7 @@ plot(f,abs(h).^2*var);
 TF_F(1) = [];
 padding = 50;
 TF_F = padarray(abs(TF_F).',padding); %the zero-adding method is applied 
-%here in order to gain more details regarding the Fourier Transform.
+%here i
 
 % figure(2),
 % n1 = 1:1:length(TF_F);
@@ -56,8 +56,8 @@ TF_F = padarray(abs(TF_F).',padding); %the zero-adding method is applied
 
 %% Plage de frequences
 
-fmin = 34.624+padding; %lower limit of our integer calculus
-fmax = 217.894+padding; %upper limit of our integer calculus
+fmin = 34.624+padding; %borne inf
+fmax = 217.894+padding; %borne sup
 
 %% Methode des rectangles
 rectangle(TF_F,10,fmin,fmax);
