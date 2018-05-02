@@ -1,83 +1,83 @@
 function [ imf ] = EMD_Basic( signal )
-%EMD_BASIC Summary of this function goes here
-%   Detailed explanation goes here
+%EMD_BASIC proceeds to the decomposition of the signal into different
+%Intrinsec Mode Function.
+%
+%Input :
+% - Signal : column vector of the signal whcih needs to be decomposed
+%Output :
+% - imf : a matrix whose columns are the different imf  : imf(:,i)
 
 n = length(signal);
 ech = (1:n)';
-x = signal; %working vecteur
-[max,imax,min,imin,next] = search_minmax(x);
-maxline = pchip(imax,max,ech);
-minline = pchip(imin,min,ech);
-residual = (maxline+minline)/2; 
 
-d = x - residual;
-[max,imax,min,imin,next] = search_minmax(d);
+x = signal;
+m = x; %working vecteur
+
+[max,imax,min,imin,next] = search_minmax2(m);
+nzero = num_zeros(m);
 maxline = pchip(imax,max,ech);
 minline = pchip(imin,min,ech);
-residual = (maxline+minline)/2; 
-ampenv =  abs((maxline-minline))/2; 
+tendency = (maxline+minline)/2;
+ampenv =  abs((maxline-minline))/2;
+imf(:,1)=signal;
+
+% [max,imax,min,imin,next] = search_minmax(h);
+% maxline = pchip(imax,max,ech);
+% minline = pchip(imin,min,ech);
+% residual = (maxline+minline)/2;
+% ampenv =  abs((maxline-minline))/2;
 
 %%
-m = signal;
-mp = m;
+% m = signal;
+% mp = m;
+i = 1;
+j=1;
 
+%keyboard
 
-while stop_sifting(ampenv,residual,next) == false
-   
-   h = d;
-   d = h - residual;
-   
-   % find maxima and minima
-   [max,imax,min,imin,next] = search_minmax(h);
-   %Interpolation on maxima and minima 
-   maxline = pchip(imax,max,ech);
-   minline = pchip(imin,min,ech);
-   %Substraction from the average
-   residual = (maxline+minline)/2;
-   ampenv = (maxline-minline)/2;
+%% Iteration : search all the IMF
+
+while 1
+    %% Sifting process : iterates if m is NOT an IMF => does not verify the sifting stopping criterion
+    while ~stop_sifting(ampenv,tendency,next,nzero)
+        
+         mp = m;
+         m = m - tendency;
+%         if length(m)<50
+%            keyboard
+%         end
+
+        
+        [max,imax,min,imin,next] = search_minmax2(m);
+        nzero = num_zeros(m);
+        
+%         if next < 3 || i> 100
+%             break
+%         end
+        %Interpolation on maxima and minima
+        maxline = pchip(imax,max,ech);
+        minline = pchip(imin,min,ech);
+        %Substraction from the average
+        tendency = (maxline+minline)/2;
+        ampenv = (maxline-minline)/2;
+
+        j=j+1;
+    end
+    i = i+1;
+    plot(mp);
+    imf(:,i)=mp;
+
     
-%    if white_test(residual,40)
-%    x = detail;
-%    end
-hold on
-plot(ech,x,ech,residual,ech,d,ech,ampenv)
-
-%%
-% 
-%     %sifting
-%     m = m - moyenne;
-%     [stop_sift,moyenne] = stop_sifting_fixe(t,m,INTERP,MODE_COMPLEX,ndirs);
-%     % display
-%     if display_sifting && ~MODE_COMPLEX
-%       NBSYM = 2;
-%       [indmin,indmax] = extr(mp);
-%       [tmin,tmax,mmin,mmax] = boundary_conditions(indmin,indmax,t,mp,mp,NBSYM);
-%       envminp = interp1(tmin,mmin,t,INTERP);
-%       envmaxp = interp1(tmax,mmax,t,INTERP);
-%       envmoyp = (envminp+envmaxp)/2;
-%       if FIXE || FIXE_H
-%         display_emd_fixe(t,m,mp,r,envminp,envmaxp,envmoyp,nbit,k,display_sifting)
-%       else
-%         sxp=2*(abs(envmoyp))./(abs(envmaxp-envminp));
-%         sp = mean(sxp);
-%         display_emd(t,m,mp,r,envminp,envmaxp,envmoyp,s,sp,sxp,sdt,sd2t,nbit,k,display_sifting,stop_sift)
-%       end
-%     end
-% 
-%     mp = m;
-%     nbit=nbit+1;
-%     NbIt=NbIt+1;
-% 
-% 
-%     end
-% 
+    x = x - mp; %working vecteur
+    [max,imax,min,imin,next] = search_minmax2(x);
+    maxline = pchip(imax,max,ech);
+    minline = pchip(imin,min,ech);
+    tendency = (maxline+minline)/2;
+    ampenv =  abs((maxline-minline))/2;
+    m = x;
+    mp = m;
+end %% sifting process
 
 
-
-
-end
-
-imf = d;
-
-end
+end %% search IMF
 

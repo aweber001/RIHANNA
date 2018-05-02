@@ -27,14 +27,14 @@ max = data(max);
 imin = index(min);
 min = data(min);
 
-if size(max,2) > 0
+if size(max,2) > 1
     
     if max(end) == data(end)
         max = max(1:end-1);
         imax = imax(1:end-1);
     end
 end
-if size(max,2) > 0
+if size(max,2) > 1
     if max(1) == data(1)
         max = max(2:end);
         imax = imax(2:end);
@@ -43,7 +43,7 @@ end
 
 
 
-if size(min,2)>0
+if size(min,2)>1
     
     if min(end) == data(end)
         min = min(1:end-1);
@@ -53,7 +53,7 @@ if size(min,2)>0
     
 end
 
-if size(min,2)>0
+if size(min,2)>1
     
     if min(1) == data(1)
         min = min(2:end);
@@ -62,11 +62,11 @@ if size(min,2)>0
     
 end
 
-max = [median(data);max;median(data)];
-imax = [1;imax;length(data)];
-
-min = [median(data);min;median(data)];
-imin = [1;imin;length(data)];
+% max = [median(data);max;median(data)];
+% imax = [1;imax;length(data)];
+% 
+% min = [median(data);min;median(data)];
+% imin = [1;imin;length(data)];
 
 next = length(min) + length(max);
 

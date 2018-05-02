@@ -27,10 +27,10 @@ t = (0:1/fs:0.2)';
 fm = 50;
 
 %Signal
-y = sin(2*pi*300*t);
+y = sin(2*pi*500*t)+sin(2*pi*1500*t);
 %y = fmmod(x,fc,fs,fm);
 ydouble = ammod(y,fc,fs);
 
 %Display IMFs
-EMD_Basic(SimonRRlay);
+EMD_Basic(y);
 

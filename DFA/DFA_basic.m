@@ -10,6 +10,18 @@ function [scale, F_DFA, F_DFA_corr] = DFA_basic(Signal,q,order,overlap,correctio
  %%       F_DFA : q-th order fluctuation function
  %%       F_DFA_corr : modified DFA on <correction_num> average
 
+<<<<<<< Updated upstream
+=======
+%% Init var
+max = floor(length(Signal)*0.1);
+%scale = [10:10:max];
+%scale=[16 ,32 ,64, 128, 256, 512]; % scale from the windows%
+<<<<<<< Updated upstream
+scale = (3:max);
+=======
+scale = (10:max);
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 %% Windows
 max = floor(length(Signal)*0.1);
@@ -34,7 +46,16 @@ for kk=1:L
     RFN=Calcul_RFN(Signal_cut,Absis_cut,Signal_inv_cut,Absis_inv_cut,order);
     F_DFA(1,kk)=(mean(RFN.^q)).^(1/q);
 end
+<<<<<<< Updated upstream
 Poly=reg_lin(log10(scale),log10(F_DFA),order);
+=======
+<<<<<<< Updated upstream
+Poly=reg_lin(log10(scale),log10(Fn),order);
+=======
+Poly=reg_lin(log10(scale),log10(Fn),order)
+>>>>>>> Stashed changes
+
+>>>>>>> Stashed changes
 Alpha=Poly(2);
 
 %% STEP 3: F_DFA_corr calculation
@@ -56,7 +77,16 @@ if correction_num > 1 && Alpha < 1
   end
 
 
+<<<<<<< Updated upstream
 %% Correction coefficient K
+=======
+figure,
+scatter(log10(scale),log10(Fn));
+hold on
+plot(log10(scale),RegLine);
+var(Fn)
+
+>>>>>>> Stashed changes
 
   scalebis = find(scale > N/20);
   scalebis(2:end) = []; % index where scale ~ N/20
