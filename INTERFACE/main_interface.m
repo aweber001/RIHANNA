@@ -87,6 +87,7 @@ function EMD_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
+
 % --------------------------------------------------------------------
 function DFA_Callback(hObject, eventdata, handles)
 % hObject    handle to DFA (see GCBO)
@@ -115,6 +116,7 @@ function Basic_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
+
 % --------------------------------------------------------------------
 function Inverse_Callback(hObject, eventdata, handles)
 % hObject    handle to Inverse (see GCBO)
@@ -136,13 +138,7 @@ function text_intro_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to text_intro (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-
-
-% --- Executes during object creation, after setting all properties.
-function logo_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to logo (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 imshow('logo2.jpg');
+
 
 % Hint: place code in OpeningFcn to populate logo
