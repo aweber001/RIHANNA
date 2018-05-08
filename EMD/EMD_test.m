@@ -1,3 +1,5 @@
+%% FICHIER DE TEST avec signaux ou signaux synthétiques.
+
 load('../DataTest.mat')
 clearvars -except Antoine AxelleRR Benjamin Paul SimonRR SimonRRlay SimonRRsit SimonRRstand Youssef
 close all
@@ -19,18 +21,18 @@ close all
 % end
 % 
 % %% test 1: signal AMFM
-
-% Variables
-fs = 4000; 
-fc = 20;  
-t = (0:1/fs:0.2)';
-fm = 50;
-
-%Signal
-y = sin(2*pi*500*t)+sin(2*pi*1500*t);
-%y = fmmod(x,fc,fs,fm);
-ydouble = ammod(y,fc,fs);
+% 
+% % Variables
+% fs = 4000; 
+% fc = 20;  
+% t = (0:1/fs:0.2)';
+% fm = 50;
+% 
+% %Signal
+% y = sin(2*pi*500*t)+sin(2*pi*1500*t);
+% %y = fmmod(x,fc,fs,fm);
+% ydouble = ammod(y,fc,fs);
 
 %Display IMFs
-EMD_Basic(y);
+EMD_Basic(SimonRRlay);
 

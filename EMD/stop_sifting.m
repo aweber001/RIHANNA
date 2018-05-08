@@ -21,12 +21,6 @@ ratioamp = abs(tendency(20:end-20))./ampenv(20:end-20);
 mean_ratio = mean(ratioamp);
 approval = (mean( ratioamp > para_threshold(1)) < para_threshold(3) && any(ratioamp < para_threshold(2)) && (abs(nzero-next)<=1));%&& all(next > 2) ;
 
-%   at each point, mean_amplitude < THRESHOLD2*envelope_amplitude
-%   &
-%   mean of boolean array {(mean_amplitude)/(envelope_amplitude) > THRESHOLD} < TOLERANCE
-%   &
-%   |#zeros-#extrema|<=1
-%
 
 
 end

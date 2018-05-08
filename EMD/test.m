@@ -1,3 +1,5 @@
+%% FICHIER TEST POUR COMPRENDRE LE CRITERE D ARRET : max - min / max + min
+
 clear all;
 close all;
 
