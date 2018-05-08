@@ -13,15 +13,15 @@ for i = 1 : nb_white
     IMFs{i} = emd(noisy_data);
 end
 
-[nrows,~] = cellfun(@size,IMFs)
+[nrows,~] = cellfun(@size,IMFs);
 
-mean_IMF = zeros(nrows,length(data));
+mean_IMF = zeros(max(nrows),length(data));
   
 for i = 1 : max(nrows)
     n = 0;
     for j = 1 : length(IMFs)
         if i <= nrows(j)
-            mean_IMF(i;:) =  mean_IMF(i;:) + IMFs{j}(i,:)
+            mean_IMF(i,:) =  mean_IMF(i,:) + IMFs{j}(i,:);
             n = n + 1;
         end
     end
