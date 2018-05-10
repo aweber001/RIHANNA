@@ -1,4 +1,4 @@
-function INTERFACE(data1,data2)
+function INTERFACE(data)
    %%  Create and then hide the GUI as it is being constructed.
    f = figure('Visible','off','Position',[100,800,1000,800]);
  
@@ -9,7 +9,7 @@ function INTERFACE(data1,data2)
              'Position',[0.01 0.7 0.98 0.3]);
          
    Axes_signal = axes('parent',fpanel_Signal,'Position',[0.4 0.2 0.55 0.6]);
-   
+   Axes_EMD = axes('parent',,'Position',[0.4 0.2 0.55 0.6]);
    
    artefac_choice = uicontrol('parent',fpanel_Signal,'Style','popupmenu',...
           'String',{'with artefac','without artefac',},...
@@ -36,8 +36,6 @@ function INTERFACE(data1,data2)
     Display_EMD_panel = uipanel('parent',tab1,'Title','Method Display','Fontsize',12,...
              'BackgroundColor','white',...
              'Position',[0.01 0.01 0.98 0.98]);
-         
-     Axes_EMD = axes('parent',Display_EMD_panel,'Position',[0.6 0.2 0.3 0.6]);
            
     Data_DFA_panel = uipanel('parent',tab2,'Title','Data','Fontsize',12,...
              'BackgroundColor','white',...
@@ -79,8 +77,7 @@ function INTERFACE(data1,data2)
     % Make the GUI visible.
     f.Visible = 'on';
     
-    plot(Axes_signal,data1);
-    plot(Axes_EMD,data2);
+    plot(Axes_signal,data);
    
 %% Callbacks
  
