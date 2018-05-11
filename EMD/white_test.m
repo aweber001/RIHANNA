@@ -1,6 +1,5 @@
 function [ answer ] = white_test( signal, k )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%white_test tests if the signal can be considered as a white noise.
 
 N = length(signal);
 r = xcorr(signal,signal,'biased');
