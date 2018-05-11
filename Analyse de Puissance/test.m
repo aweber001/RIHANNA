@@ -1,7 +1,7 @@
 %% BBG
-var = 1;
+var = 2;
 mu = 0;
-N = 512;
+N = 3000;
 bbg = randn(1,N)*sqrt(var)+mu;
 %We first study a gaussian white noise before applying our programm to 
 %actual signals.
@@ -10,30 +10,74 @@ bbg = randn(1,N)*sqrt(var)+mu;
 TF_F = fft(bbg);
 T = length(TF_F);
 f=-1/2:1/T:1/2-1/T;
-sp = abs(fftshift(TF_F)).*abs(fftshift(TF_F))/T; %theoretical DSP
+%sp = abs(fftshift(TF_F)).*abs(fftshift(TF_F))/T; %theoretical DSP
 
 
 %% Filtre
-d = [0.3 0.3*exp(1i*2*pi/3) 0.3*exp(-1i*pi*2/3)];
+poles = 0.8*exp(1i*2*pi*[-2/5 -1/5 0 1/5 2/5]); %cubic roots of the unity as poles
+ai_true=poly(poles);
 
-h = filtrage(d,f,bbg);
+x = filter(1,ai_true,bbg); %filtering the white noise to obtain our signal
 
+%h = filtrage(ai_true,f,bbg);
+h = freqz(1,ai_true,2*pi*f); %obtaning the filter function and plotting the fft 
+%to make sure the poles are at the right place
 
-figure,
-plot(f,20*log10(h));
+figure(1)
+subplot(2,1,1)
+plot(f,abs(h).^2*var); %plotting the synthetic filter's spectrum
 hold on;
 
 %% Estimation autocorrelation
 
+p = length(poles);
+
 [Rxx_est,t] = xcorr(x,'biased'); %we take the biased autocorrelation estimator
-R = toeplitz(Rxx_est); %we create a Toeplitz matrix containing the various
+% of the signal created previously (filtered white noise)
+
+
+R = toeplitz(Rxx_est(N:N+p-1)); %we create a Toeplitz matrix containing the various
 %values of the autocorrelation.
 
-A = -inv(R)*Rxx_est.'; %A contains the values of the ai corresponding to the
+A = -inv(R)*Rxx_est(N+1:N+p).'; %A contains the values of the ai corresponding to the
 %estimated filter function
+
+A =[1 A.'];
+
 h2 = freqz(1,A,2*pi*f);
 
+ai_est = A.';
 
-plot(f,20*log10(h2));
+
+var_est = A*Rxx_est(N:N+p).';
+
+figure(1)
+subplot(2,1,1)
+plot(f,abs(h2).^2*var_est);
+hold on;
+
+
+% IMPORTANCE DE 0.99
+% INFLUENCE VARIANCE SUR LE DECALAGE ?
+
+figure(1)
+subplot(2,1,2)
+zplane(ai_true)
+hold on
+zplane(ai_est)
+hold off
+
+
+periodo = periodogramme(fftshift(abs(fft(x)).^2)/N,10);
+
+figure(3)
+plot(f,fftshift(abs(fft(x)).^2)/N)
+hold on;
+plot(f,periodo,'red')
 hold off;
 
+
+
+
+methode_rectangle(fft(bbg),50,34.6,486.27)
+methode_trapeze(fft(bbg),50,34.6,486.27)

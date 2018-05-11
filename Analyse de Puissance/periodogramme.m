@@ -17,29 +17,29 @@ function [ periodogramme_simple ] = periodogramme( signal,pas )
 T = length(signal);
 
 periodogramme_simple=zeros(length(signal));
-g=zeros(pas/2); % the left side of the window (centered on a value)
-d=zeros(pas/2); % the right side of the window
+g=zeros(ceil(pas/2)); % the left side of the window (centered on a value)
+d=zeros(ceil(pas/2)); % the right side of the window
 
-TF_F = fft(signal);
-SIG = abs(fftshift(TF_F)).*abs(fftshift(TF_F))/T; % theoretical DSP
-
-for i = 1:length(SIG)
+for i = 1:length(signal)
     if (i-pas/2)<1 % We sum the left side of the window, 'looping' with the
 %end of the signal if necessary.
-        g = sum(SIG(length(SIG)-pas/2+i:length(SIG))) + sum(SIG(1:i));
+        g = mean(signal(length(signal)-pas/2+i:length(signal))) + mean(signal(1:i));
     else
-        g = sum(SIG(i-pas/2:i));
+        g = mean(signal(i-pas/2:i));
     end
     
-    if (i+pas/2)>length(SIG) %same thing goes for the right side.
-        d = sum(SIG(i:length(SIG))) + sum(SIG(1:pas/2-(length(SIG)-i)));
+    if (i+pas/2)>length(signal) %same thing goes for the right side.
+        d = mean(signal(i:length(signal))) + mean(signal(1:pas/2-(length(signal)-i)));
     else
-        d = sum(SIG(i:i+pas/2));
+        d = mean(signal(i:i+pas/2));
     end
     
-    periodogramme_simple(i) = (d+g)/pas; %we then sum everything up and
+    periodogramme_simple(i) = mean(d+g); %we then sum everything up and
     %computes the mean.
 end
+
+
+periodogramme_simple = periodogramme_simple(:,1);
 
 % figure,
 % plot(f,sp,'cyan');

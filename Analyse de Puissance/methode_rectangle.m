@@ -9,8 +9,8 @@ function [ P_rectangle,X,Y ] = rectangle( signal,pas,fmin,fmax )
 %%
 
 signal = abs(signal); %in case the signal is complex
-n1 = -0.5:0.001:0.5;
-%n1 = 1:1:length(signal); 
+%n1 = -0.5:0.001:0.5;
+n1 = 1:1:length(signal); 
 
 N = length(signal)/pas; %the number of rectangles we will compute
 
@@ -28,11 +28,11 @@ for i=1:N
 end
 
 
-figure,
+%figure,
 %plot(n1,signal);
-hold on;
+%hold on;
 %plot(n1,abs(zr));
-hold on;
+%hold on;
 %% Puissance sur un intervalle de frequences
 
 P_rectangle = 0;
@@ -45,15 +45,17 @@ for i=floor(fmin):1:floor(fmax)+1
     P_rectangle = P_rectangle + abs(zr(i)); %We take the 'whole' part first
 end
 
-P_rectangle = P_rectangle - (fmin-floor(fmin))*abs(zr(floor(fmin))) - (floor(fmax)+1-fmax)*abs(zr(floor(fmax)));
+P_rectangle = P_rectangle - (fmin-floor(fmin))*abs(zr(floor(fmin))) - (floor(fmax)+1-fmax)*abs(zr(floor(fmax)))
 %we then compute the smaller remaining areas on the left and right side
-X = [fmin:0.1:fmax];
+
+
+X = [fmin:0.2:fmax];
 Y = abs(zr(floor(X)));
 
 %plot(n1,area(X,Y));
-title('FFT - Methode des rectangles');
+%title('Rectangular method');
 %legend('Puissance',P_rectangle);
-hold off;
+%hold off;
 
 end
 

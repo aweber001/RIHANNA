@@ -20,23 +20,24 @@ periodogramme_simple=zeros(length(signal));
 g=zeros(pas/2); % the left side of the window (centered on a value)
 d=zeros(pas/2); % the right side of the window
 
-TF_F = fft(signal);
-SIG = abs(fftshift(TF_F)).*abs(fftshift(TF_F))/T; % theoretical DSP
+s = 0;
 
 for i = 1:length(SIG)
-    if (i-pas/2)<1 % We sum 
+    if (i-pas/2)<1 % We sum the left side of the window, 'looping' with the
+%end of the signal if necessary.
         g = sum(SIG(length(SIG)-pas/2+i:length(SIG))) + sum(SIG(1:i));
     else
         g = sum(SIG(i-pas/2:i));
     end
     
-    if (i+pas/2)>length(SIG)
+    if (i+pas/2)>length(SIG) %same thing goes for the right side.
         d = sum(SIG(i:length(SIG))) + sum(SIG(1:pas/2-(length(SIG)-i)));
     else
         d = sum(SIG(i:i+pas/2));
     end
     
-    periodogramme_simple(i) = (d+g)/pas;
+    periodogramme_simple(i) = (d+g)/pas; %we then sum everything up and
+    %computes the mean.
 end
 
 % figure,

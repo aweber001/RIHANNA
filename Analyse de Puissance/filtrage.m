@@ -8,6 +8,8 @@ function [ h ] = filtrage( d,f,bbg )
 %   h : the filter function associated to the poles
 
 x = filter(1,d,bbg);
+figure(12)
+plot(-1/2:1/length(x):1/2-1/length(x),1/length(x)*abs(fftshift(fft(x))).^2)
 h = freqz(1,d,2*pi*f);
 
 end
